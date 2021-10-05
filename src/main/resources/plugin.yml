@@ -1,0 +1,40 @@
+name: ${project.name}
+main: com.squareblob.civworldeditutils.CivWorldEditUtils
+version: ${project.version}
+authors:
+  - Squareblob
+depend:
+  - WorldEdit
+  - Citadel
+  - Bastion
+description: Simple and hacky commands to make it easier to use Civ plugins with WorldEdit
+api-version: 1.16
+commands:
+  setreinforcement:
+    aliases:
+      - setrein
+    usage: /setreinforcement [mask] [group]
+    description: Sets the reinforcement of blocks matching given mask
+    min-args: 2
+    max-args: 100
+    player-only: true
+    permission: citadelutil.admin
+  setbastion:
+    usage: /setbastion [mask] [bastiontype]
+    description: Creates pending bastions for blocks matching a given mask
+    min-args: 2
+    max-args: 100
+    player-only: true
+    permission: citadelutil.admin
+  replacereinforcedblocks:
+    aliases:
+      - replacereinblocks
+    usage: /replacereinforcedblocks [group] [pattern]
+    description: Replaces blocks reinforced to a given group with pattern
+    min-args: 2
+    max-args: 100
+    player-only: true
+    permission: citadelutil.admin
+permissions:
+  civworldeditutils.admin:
+    default: op
