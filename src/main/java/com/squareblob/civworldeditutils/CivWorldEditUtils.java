@@ -57,6 +57,9 @@ public class CivWorldEditUtils extends ACivMod {
         if (!block.getLocation().equals(protecting.getLocation())) {
             return false;
         }
+        if (block.getType().isAir()) {
+            return false;
+        }
         Reinforcement rein = ReinforcementLogic.callReinforcementCreationEvent(p, block, reinType, group);
         if (rein != null) {
             ReinforcementLogic.createReinforcement(rein);
