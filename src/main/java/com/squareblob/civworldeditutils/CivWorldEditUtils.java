@@ -6,6 +6,7 @@ import com.sk89q.worldedit.extension.input.InputParseException;
 import com.sk89q.worldedit.extension.input.ParserContext;
 import com.sk89q.worldedit.function.mask.Mask;
 import com.sk89q.worldedit.function.mask.MaskIntersection;
+import com.sk89q.worldedit.function.mask.MaskUnion;
 import com.sk89q.worldedit.function.pattern.Pattern;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -28,6 +29,7 @@ public class CivWorldEditUtils extends ACivMod {
         instance = this;
     }
 
+    // Don't do this... I'm sure there's something in the WE api
     public MaskIntersection parseMask(Player p, String[] args) throws InputParseException {
         MaskIntersection mask = new MaskIntersection();
         ParserContext parserContext = new ParserContext();
@@ -35,8 +37,13 @@ public class CivWorldEditUtils extends ACivMod {
         parserContext.setWorld(BukkitAdapter.adapt(p.getWorld()));
         for (String maskToParse : args) {
             maskToParse = maskToParse.replaceAll("\"", "");
-            Mask maskTemp = WorldEdit.getInstance().getMaskFactory().parseFromInput(maskToParse, parserContext);
-            mask.add(maskTemp);
+            MaskUnion maskUnion = new MaskUnion();
+            for (String maskUnionToParse : maskToParse.split(",")) {
+                Mask maskTemp =
+                        WorldEdit.getInstance().getMaskFactory().parseFromInput(maskUnionToParse, parserContext);
+                maskUnion.add(maskTemp);
+            }
+            mask.add(maskUnion);
         }
         return mask;
     }
