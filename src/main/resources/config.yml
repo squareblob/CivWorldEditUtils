@@ -1,0 +1,10 @@
+reinforcement_presets:
+  default:
+    groups:
+      - GROUP
+    commands:
+      - "setbastion SPONGE basic"
+      - "setreinforcement SPONGE $GROUP mat=diamond"
+      - "setreinforcement !SPONGE $GROUP mat=iron_ingot"
+      - "setreinforcement ##doors,##trapdoors,CHEST,TRAPPED_CHEST,GOLD_BLOCK,BARREL $GROUP mat=diamond"
+      - "setreinforcement \"obsidian <##doors\" $GROUP mat=diamond"

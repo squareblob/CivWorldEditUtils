@@ -13,15 +13,24 @@ commands:
   setreinforcement:
     aliases:
       - setrein
-    usage: /setreinforcement [mask] [group]
-    description: Sets the reinforcement of blocks matching given mask
+    usage: /setreinforcement [mask] [group] <material=?> <health=?>
+    description: Set the reinforcement of blocks matching given mask
+    min-args: 2
+    max-args: 100
+    player-only: true
+    permission: citadelutil.admin
+  setreinforcementpreset:
+    aliases:
+      - setreinpreset
+    usage: /setreinforcementpreset [presetName] <groupA> ... <groupZ>
+    description: Run a list of reinforcement commands specified in config.yml
     min-args: 2
     max-args: 100
     player-only: true
     permission: citadelutil.admin
   setbastion:
     usage: /setbastion [mask] [bastiontype]
-    description: Creates pending bastions for blocks matching a given mask
+    description: Create pending bastions for blocks matching a given mask in current WorldEdit selection
     min-args: 2
     max-args: 100
     player-only: true
@@ -30,7 +39,7 @@ commands:
     aliases:
       - replacereinblocks
     usage: /replacereinforcedblocks [group] [pattern]
-    description: Replaces blocks reinforced to a given group with pattern
+    description: Replace blocks reinforced to a given group in current WorldEdit selection with a block pattern selection
     min-args: 2
     max-args: 100
     player-only: true
