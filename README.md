@@ -2,28 +2,23 @@ Some hacky commands to make it easier to use Civ plugins with WorldEdit
 
 # Usage Examples
 
-## setReinforcement
+## civMask
+Saves a WorldEdit [mask](https://worldedit.enginehub.org/en/latest/usage/general/masks/) which can later be used with commands like `reinforceMask` and `bastionMask`.
 
-Set all blocks matching a [mask](https://worldedit.enginehub.org/en/latest/usage/general/masks/) in current WorldEdit
-selection to given group. Optional arguments for reinforcement material (held item in main hand by default) and health.
 Examples:
+`/cmask obsidian <##doors` will select obsidian directly beneath a door
 
-`/setrein #existing someGroup` (reinforces all blocks in selection)
+## reinforceMask
+Reinforce blocks in WorldEdit selection matching current civmask
 
-`/setrein "obsidian <##doors" someGroup mat=diamond` (reinforces obsidian beneath doors)
-
-Note that this plugin parses masks in a very janky manner and not all types of masks are supported.
+## bastionMask
+Create pending bastions in WorldEdit selection from blocks matching current civmask
 
 ## setReinforcementPreset
+Run a list of civmask and reinforcement commands specified in config.yml
 
-Run a list of reinforcement commands specified in config.yml
-
+Format:
 `/setreinpreset default someGroup`
 
-## setBastion
-
-Create pending bastions for blocks matching a given mask in current WorldEdit selection
-
 ## replaceReinforcedBlocks
-
 Replace blocks reinforced to a given group in current WorldEdit selection with a block pattern

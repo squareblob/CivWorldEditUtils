@@ -5,10 +5,8 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extension.input.InputParseException;
 import com.sk89q.worldedit.extension.input.ParserContext;
 import com.sk89q.worldedit.function.mask.Mask;
-import com.sk89q.worldedit.function.mask.MaskIntersection;
-import com.sk89q.worldedit.function.mask.MaskUnion;
 import com.sk89q.worldedit.function.pattern.Pattern;
-import java.util.concurrent.TimeUnit;
+import com.squareblob.civworldeditutils.commands.CWEUCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -19,9 +17,13 @@ import vg.civcraft.mc.citadel.reinforcementtypes.ReinforcementType;
 import vg.civcraft.mc.civmodcore.ACivMod;
 import vg.civcraft.mc.namelayer.group.Group;
 
+import java.util.concurrent.TimeUnit;
+
 public class CivWorldEditUtils extends ACivMod {
     private static CivWorldEditUtils instance;
     private CWEUConfigManager config;
+    private CWEUCommandManager commandManager;
+    private Mask civmask;
 
     public static CivWorldEditUtils getInstance() {
         return instance;
@@ -32,29 +34,11 @@ public class CivWorldEditUtils extends ACivMod {
         super.onEnable();
         instance = this;
         config = new CWEUConfigManager(this);
+        commandManager = new CWEUCommandManager(this);
         if (!config.parse()) {
             getLogger().severe("Errors in config file, shutting down");
             Bukkit.shutdown();
         }
-    }
-
-    // Don't do this... I'm sure there's something in the WE api
-    public MaskIntersection parseMask(Player p, String[] args) throws InputParseException {
-        MaskIntersection mask = new MaskIntersection();
-        ParserContext parserContext = new ParserContext();
-        parserContext.setExtent(BukkitAdapter.adapt(p).getExtent());
-        parserContext.setWorld(BukkitAdapter.adapt(p.getWorld()));
-        for (String maskToParse : args) {
-            maskToParse = maskToParse.replaceAll("\"", "");
-            MaskUnion maskUnion = new MaskUnion();
-            for (String maskUnionToParse : maskToParse.split(",")) {
-                Mask maskTemp =
-                        WorldEdit.getInstance().getMaskFactory().parseFromInput(maskUnionToParse, parserContext);
-                maskUnion.add(maskTemp);
-            }
-            mask.add(maskUnion);
-        }
-        return mask;
     }
 
     public Pattern parsePattern(Player p, String patternToParse) throws InputParseException {
@@ -100,4 +84,11 @@ public class CivWorldEditUtils extends ACivMod {
         return config;
     }
 
+    public Mask getCivmask() {
+        return civmask;
+    }
+
+    public void setCivmask(Mask civmask) {
+        this.civmask = civmask;
+    }
 }

@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.configuration.ConfigurationSection;
 import vg.civcraft.mc.civmodcore.ACivMod;
-import vg.civcraft.mc.civmodcore.CoreConfigManager;
+import vg.civcraft.mc.civmodcore.config.ConfigParser;
 
-public class CWEUConfigManager extends CoreConfigManager {
+public class CWEUConfigManager extends ConfigParser {
 
     private List<reinforcementPreset> reinforcementPresets;
 

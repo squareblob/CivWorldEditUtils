@@ -3,8 +3,16 @@ reinforcement_presets:
     groups:
       - GROUP
     commands:
-      - "setbastion SPONGE basic"
-      - "setreinforcement SPONGE $GROUP mat=diamond"
-      - "setreinforcement !SPONGE $GROUP mat=iron_ingot"
-      - "setreinforcement ##doors,##trapdoors,CHEST,TRAPPED_CHEST,GOLD_BLOCK,BARREL $GROUP mat=diamond"
-      - "setreinforcement \"obsidian <##doors\" $GROUP mat=diamond"
+      - "cmask sponge"
+      - "basionmask basic"
+      - "reinmask $GROUP diamond"
+      - "cmask !sponge"
+      - "reinmask $GROUP IRON"
+      - "cmask ##trapdoors"
+      - "reinmask $GROUP DIAMOND"
+      - "cmask ##doors"
+      - "reinmask $GROUP DIAMOND"
+      - "cmask CHEST,TRAPPED_CHEST,GOLD_BLOCK,BARREL"
+      - "reinmask $GROUP DIAMOND"
+      - "cmask obsidian <##doors"
+      - "reinmask $GROUP DIAMOND"

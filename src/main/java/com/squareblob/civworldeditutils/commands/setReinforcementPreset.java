@@ -1,53 +1,43 @@
 package com.squareblob.civworldeditutils.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.*;
 import com.squareblob.civworldeditutils.CWEUConfigManager;
 import com.squareblob.civworldeditutils.CivWorldEditUtils;
 import com.squareblob.civworldeditutils.reinforcementPreset;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import vg.civcraft.mc.citadel.CitadelUtility;
-import vg.civcraft.mc.civmodcore.command.CivCommand;
-import vg.civcraft.mc.civmodcore.command.StandaloneCommand;
-import vg.civcraft.mc.namelayer.command.TabCompleters.GroupTabCompleter;
 
-@CivCommand(id = "setreinforcementpreset")
-public class setReinforcementPreset extends StandaloneCommand {
+public class setReinforcementPreset extends BaseCommand {
 
-    @Override
-    public boolean execute(CommandSender sender, String[] args) {
-        String name = args[0];
+    @CommandAlias("setreinforcementpreset")
+    @Syntax("<presetName> <groupA> ... <groupZ>")
+    @Description("Run a list of reinforcement commands specified in config.yml")
+    @CommandCompletion("@reinpresets @groups")
+    @CommandPermission("civworldeditutils.admin")
+    public boolean execute(CommandSender sender, String presetName, String[] args) {
         CWEUConfigManager configManager = CivWorldEditUtils.getInstance().getConfigManager();
         reinforcementPreset preset = configManager.getReinforcementPresets().stream()
-                .filter(p -> p.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+                .filter(p -> p.getName().equalsIgnoreCase(presetName)).findFirst().orElse(null);
         if (preset == null) {
-            CitadelUtility.sendAndLog(sender, ChatColor.RED, "No preset called " + name + " could be found");
+            CitadelUtility.sendAndLog(sender, ChatColor.RED, "No preset called " + presetName + " could be found");
             return false;
         }
-        if (preset.getGroups().size() != args.length - 1) {
-            CitadelUtility.sendAndLog(sender, ChatColor.RED, "You must the specified number of valid groups");
+        int numGroups = preset.getGroups().size();
+        if (numGroups != args.length) {
+            CitadelUtility.sendAndLog(sender, ChatColor.RED, "The preset " + presetName + " requires" + numGroups + " groups");
             return false;
         }
         for (String command : preset.getCommands()) {
             for (int i = 0; i < preset.getGroups().size(); i++) {
                 command = command.replace("$" + preset.getGroups().get(i), args[i + 1]);
             }
+            // TODO : Only run command if it belongs to this plugin
             sender.sendMessage(ChatColor.BLUE + "running " + ChatColor.AQUA + command);
             Bukkit.getServer().dispatchCommand(sender, command);
         }
         return true;
-    }
-
-    @Override
-    public List<String> tabComplete(CommandSender sender, String[] args) {
-        if (args.length <= 1) {
-            return CivWorldEditUtils.getInstance().getConfigManager().getReinforcementPresets().stream().map(
-                    reinforcementPreset::getName).collect(Collectors.toList());
-        } else {
-            return GroupTabCompleter.complete(args[args.length - 1], null, (Player) sender);
-        }
     }
 }
