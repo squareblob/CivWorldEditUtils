@@ -5,7 +5,11 @@ import co.aikar.commands.CommandCompletions;
 import com.sk89q.worldedit.WorldEdit;
 import com.squareblob.civworldeditutils.CivWorldEditUtils;
 import com.squareblob.civworldeditutils.reinforcementPreset;
+import isaac.bastion.Bastion;
+import isaac.bastion.BastionBlock;
 import isaac.bastion.BastionType;
+import isaac.bastion.manager.BastionBlockManager;
+import isaac.bastion.storage.BastionBlockStorage;
 import org.bukkit.plugin.Plugin;
 import vg.civcraft.mc.citadel.Citadel;
 import vg.civcraft.mc.citadel.reinforcementtypes.ReinforcementType;
@@ -42,8 +46,9 @@ public class CWEUCommandManager extends CommandManager {
                 .stream().map(ReinforcementType::getName)
                 .filter(name -> name.toLowerCase().startsWith(context.getInput().toLowerCase()))
                 .collect(Collectors.toList()));
+        // todo
         completions.registerCompletion("bastiontypes", (context -> Collections.singletonList(BastionType.getDefaultType())));
-        completions.registerCompletion("reinpresets", context ->  CivWorldEditUtils.getInstance().getConfigManager().getReinforcementPresets().stream().map(
+        completions.registerCompletion("reinpresets", context -> CivWorldEditUtils.getInstance().getConfigManager().getReinforcementPresets().stream().map(
                 reinforcementPreset::getName).collect(Collectors.toList()));
     }
 }

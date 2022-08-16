@@ -65,7 +65,6 @@ public class CivWorldEditUtils extends ACivMod {
         if (block.getType().isAir()) {
             return false;
         }
-
         Reinforcement rein = new Reinforcement(block.getLocation(), reinType, group.getGroupId(),
                 System.currentTimeMillis() - TimeUnit.DAYS.toMillis(daysOld),
                 health,

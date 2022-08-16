@@ -32,7 +32,7 @@ public class setReinforcementPreset extends BaseCommand {
         }
         for (String command : preset.getCommands()) {
             for (int i = 0; i < preset.getGroups().size(); i++) {
-                command = command.replace("$" + preset.getGroups().get(i), args[i + 1]);
+                command = command.replace("$" + preset.getGroups().get(i), args[i]);
             }
             // TODO : Only run command if it belongs to this plugin
             sender.sendMessage(ChatColor.BLUE + "running " + ChatColor.AQUA + command);

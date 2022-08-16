@@ -4,8 +4,8 @@ reinforcement_presets:
       - GROUP
     commands:
       - "cmask sponge"
-      - "basionmask basic"
-      - "reinmask $GROUP diamond"
+      - "bastionmask bastion"
+      - "reinmask $GROUP DIAMOND"
       - "cmask !sponge"
       - "reinmask $GROUP IRON"
       - "cmask ##trapdoors"
